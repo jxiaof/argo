@@ -1,0 +1,33 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Sensor
+metadata:
+  name: http-pod-coller
+spec:
+  dependencies:
+    - name: kas-job
+      eventSourceName: job-resource
+      eventName: example
+  triggers:
+    - template:
+        name: http-trigger
+        http:
+          url: http://5nb3dcy.nat.ipyingshe.com:30953/test
+          payload:
+            - src:
+                dependencyName: kas-job
+                dataKey: body
+              dest: body
+            - src:
+                dependencyName: kas-job
+                dataKey: type
+              dest: type
+
+          method: POST
+        parameters:
+          - src:
+              dependencyName: kas-job
+            dest: spec.arguments.parameters.0.value
+
+      retryStrategy:
+        steps: 3
+        duration: 3s

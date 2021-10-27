@@ -1,0 +1,10 @@
+version: '3'
+services:
+  atmodels-svr:
+    image: 'iris-web:dev'
+    ports:
+      - 8090:8090
+    environment:
+      ENV_LOG_LEVEL: debug
+    # volumes:
+    #   - "E:\\data\\ks3file:/data/upload"

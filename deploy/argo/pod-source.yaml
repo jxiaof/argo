@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: EventSource
+metadata:
+  name: kas-pod-event
+  namespace: kas-controller
+spec:
+  template:
+    serviceAccountName: default # assign a service account with `get`, `list` and `watch` permissions on the resource being watched.
+  resource:
+    example:
+      # namespace to listen events within
+      namespace: kas-job
+      # resource group
+      group: ""
+      # resource version
+      version: v1
+      # resource kind
+      resource: pods
+      # type of events
+      # possible values are ADD, DELETE, UPDATE
+      # Optional
+      eventTypes:
+        - ADD
